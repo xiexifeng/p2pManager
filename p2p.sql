@@ -112,6 +112,7 @@ CREATE TABLE p2p_account.a_person(
 
 CREATE TABLE p2p_account.a_login_account(
 	login_account_id varchar(32) PRIMARY KEY NOT NULL COMMENT 'primary id',
+    person_id varchar(32) NOT NULL COMMENT 'personId',
     mobile VARCHAR(13) UNIQUE NOT NULL COMMENT '注册手机号',
     account_name varchar(50) null comment '账户名称',
     account_pwd varchar(32) not null comment '账户密码-md5',
@@ -139,6 +140,31 @@ CREATE TABLE p2p_account.a_login_log(
     update_time DATETIME NOT NULL COMMENT '更新时间',
     remark VARCHAR(200) NULL COMMENT '备注'
 )ENGINE=INNODB  DEFAULT CHARSET=UTF8 COMMENT 'p2p用户登录日志表';
+
+CREATE TABLE p2p_account.a_capital_account(
+	capital_account_id varchar(32) PRIMARY KEY NOT NULL COMMENT 'primary id',
+    login_account_id VARCHAR(13) NULL COMMENT '登录账号id',
+    person_id varchar(32) NOT NULL COMMENT 'personId',
+    capital_account_status varchar(30) not null comment '资金账户状态',
+    capital_account_code varchar(10) not null comment '资金账户编码',
+    capital_account_role varchar(30) not null comment '资金账户角色',
+    balance_amt decimal(14,4) default 0 not null comment '账户可用余额',
+    freezed_amt decimal(14,4) default 0 not null comment '账户冻结金额',
+    unconfirmed_amt decimal(14,4) default 0 not null comment '账户未确认金额',
+    third_account_id varchar(32) null comment '三方平台资金账户id',
+    create_time DATETIME NOT NULL COMMENT '创建时间',
+    update_time DATETIME NOT NULL COMMENT '更新时间',
+    remark VARCHAR(200) NULL COMMENT '备注'
+)ENGINE=INNODB  DEFAULT CHARSET=UTF8 COMMENT 'p2p用户资金账户信息表';
+
+CREATE TABLE p2p_account.a_third_account(
+	third_account_id varchar(32) PRIMARY KEY NOT NULL COMMENT 'primary id',
+    third_account_no varchar(50) null comment '三方平台资金账户编码',
+    local_account_no varchar(50) null comment '本地平台资金账户编码',
+    create_time DATETIME NOT NULL COMMENT '创建时间',
+    update_time DATETIME NOT NULL COMMENT '更新时间',
+    remark VARCHAR(200) NULL COMMENT '备注'
+)ENGINE=INNODB  DEFAULT CHARSET=UTF8 COMMENT 'p2p用户三方平台账户信息表';
 
 
 #[end p2p business system account model tables]
